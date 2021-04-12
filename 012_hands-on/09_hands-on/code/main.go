@@ -13,15 +13,23 @@ func init() {
 	tpl = template.Must(template.ParseGlob("templates/*.gohtml"))
 }
 
-func main() {
-	f, err := os.Open("../table.csv")
+func getCsvRecords(file string) [][]string {
+	f, err := os.Open(file)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	defer f.Close()
-	lines, err := csv.NewReader(f).ReadAll()
-	var headers []string = lines[0]
-	var data [][]string = lines[1:]
+	records, err := csv.NewReader(f).ReadAll()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	return records
+}
+
+func main() {
+	records := getCsvRecords("../table.csv")
+	var headers = records[0]
+	var data = records[1:]
 	tpl.ExecuteTemplate(os.Stdout, "tpl.gohtml", struct {
 		Headers []string
 		Data [][]string
