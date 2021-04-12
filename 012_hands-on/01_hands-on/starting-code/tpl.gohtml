@@ -5,12 +5,16 @@
     <title>Document</title>
 </head>
 <body>
-
 {{range .}}
-
-<!-- PUT YOUR CODE HERE TO SHOW THE DATA-->
-
+    <h4>{{.AcaYear}}</h4>
+    <h5>{{.Fall.Term}}</h5>
+    {{range .Fall.Courses}}
+        <h6>{{.Number}}:{{.Name}}-<strong>{{.Units}}</strong></h6>
+    {{end}}
+    <h5>{{.Spring.Term}}</h5>
+    {{range .Spring.Courses}}
+        <h6>{{.Number}}:{{.Name}}-<strong>{{.Units}}</strong></h6>
+    {{end}}
 {{end}}
-
 </body>
 </html>
